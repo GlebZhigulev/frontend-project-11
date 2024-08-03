@@ -1,6 +1,6 @@
 export default (elements, posts, modalWindowId) => {
     console.log(posts);
-    const post = posts[0].find(({ id }) => modalWindowId === id.toString());
+    const post = posts.find(({ id }) => modalWindowId === id.toString());
     const { modal } = elements;
   
     modal.title.textContent = post.title;

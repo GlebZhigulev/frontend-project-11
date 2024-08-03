@@ -18,7 +18,7 @@ export default function renderPosts(state, elements, i18n) {
   const postList = document.createElement('ul');
   postList.classList.add('list-group', 'border-0', 'rounded-0');
 
-  state.posts[0].forEach((post) => {
+  state.posts.forEach((post) => {
     const linkClasses = state.uiState.visitedPosts.has(post.id) ? 'fw-normal link-secondary' : 'fw-bold';
 
     const postItem = document.createElement('li');

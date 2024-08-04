@@ -1,7 +1,7 @@
 import onChange from 'on-change';
 import renderError from './renderErrors';
 import renderStatus from './renderStatus';
-import {renderPosts , renderFeeds} from './renderPostAndFeeds';
+import { renderPosts, renderFeeds } from './renderPostAndFeeds';
 import renderLinks from './renderLinks';
 import renderModal from './renderModal';
 

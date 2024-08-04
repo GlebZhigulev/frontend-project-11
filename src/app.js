@@ -71,18 +71,16 @@ elements.form.addEventListener('submit', (event) => {
         id: _.uniqueId(),
         feedId: newFeed.id,
       }));
-
       watchedState.feeds = [newFeed, ...watchedState.feeds];
       watchedState.posts = [...newPosts, ...watchedState.posts];
       watchedState.form.processState = 'success';
       watchedState.form.isValid = true;
     })
     .catch((error) => {
-      console.error(error);
       watchedState.form.isValid = error.name !== 'ValidationError';
       if (error.name === 'ValidationError') {
         watchedState.form.error = error.message;
-      } else if (error.NotValidRss) {
+      } else if (error.isInvalidRss) {
         watchedState.form.error = 'form.errors.notValidRss';
       } else if (axios.isAxiosError(error)) {
         watchedState.form.error = 'form.errors.networkProblems';

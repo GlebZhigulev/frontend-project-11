@@ -1,8 +1,6 @@
 export default function parseRssFeed(xmlData) {
-  // Разбираем входной XML в документ
   const xmlDocument = new DOMParser().parseFromString(xmlData, 'application/xml');
   
-  // Проверяем на наличие ошибок парсинга
   const errorElement = xmlDocument.querySelector('parsererror');
   if (errorElement) {
     const errorMessage = errorElement.textContent;

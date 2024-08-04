@@ -1,7 +1,6 @@
 import * as yup from 'yup';
 
 export default (url, urlList, i18n) => {
-
   yup.setLocale({
     string: {
       url: i18n.t('form.errors.notValidUrl'),

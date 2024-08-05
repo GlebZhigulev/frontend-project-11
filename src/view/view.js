@@ -30,7 +30,8 @@ export default (state, elements, i18n) => onChange(state, (path, value) => {
       renderModal(elements, state.posts, value);
       break;
     case 'uiState.visitedPosts':
-      renderLinks(value, state.posts);
+      const currentVisitedID = [...value.values()][value.size - 1];
+      renderLinks(currentVisitedID);
       break;
     default:
       throw new Error(`Unknown path: ${path}`);

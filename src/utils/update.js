@@ -2,12 +2,14 @@ import _ from 'lodash';
 import fetchData from './fetch.js';
 import parseRss from './parser.js';
 
+const updateTime = 5000;
+
 function update(state) {
   const { feeds, posts } = state;
 
   Promise.all(feeds.map(({ rssUrl, id }) => fetchData(rssUrl)
     .then(({ data }) => {
-      const [, newPosts] = parseRss(data.contents);
+      const newPosts = parseRss(data.contents).posts;
       const existingPosts = posts.filter((post) => post.feedId === id);
       const freshPosts = _.differenceBy(newPosts, existingPosts, 'link');
 
@@ -21,7 +23,7 @@ function update(state) {
       }
     })
     .catch(console.error)))
-    .finally(() => setTimeout(() => update(state), 5000));
+    .finally(() => setTimeout(() => update(state), updateTime));
 }
 
 export default update;

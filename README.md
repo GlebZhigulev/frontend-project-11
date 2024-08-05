@@ -43,4 +43,4 @@ $ make build
 
 # Deployment
 
-[RSS Reader](https://frontend-project-11-qyr3w5nm4-glebs-projects-8c48f165.vercel.app/)
+[RSS Reader](https://frontend-project-11-pied-chi.vercel.app/)

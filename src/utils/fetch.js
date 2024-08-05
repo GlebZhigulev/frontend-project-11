@@ -8,7 +8,4 @@ const makeUrl = (url, base = 'https://allorigins.hexlet.app/get') => {
   return newUrl;
 };
 
-export default (url) => {
-  const result = axios.get(makeUrl(url));
-  return result;
-};
+export default (url) => axios.get(makeUrl(url));

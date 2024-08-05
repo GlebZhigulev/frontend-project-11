@@ -1,10 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import i18next from 'i18next';
 import _ from 'lodash';
 import axios from 'axios';
+import * as yup from 'yup';
 import validator from './utils/validator.js';
 import initView from './view/view.js';
-import ru from './locale/ru.js';
 import fetchData from './utils/fetch.js';
 import getData from './utils/parser.js';
 import update from './utils/update.js';
@@ -49,21 +48,21 @@ const handleFormError = (error, watchedState) => {
   watchedState.form.processState = 'filling';
 };
 
-const handleFormSubmit = (event, watchedState, elements, i18n) => {
+const handleFormSubmit = (event, watchedState, elements) => {
   event.preventDefault();
 
   watchedState.form.processState = 'filling';
   const rssUrl = elements.input.value.trim();
   const urlList = watchedState.feeds.map((feed) => feed.rssUrl);
 
-  validator(rssUrl, urlList, i18n)
+  validator(rssUrl, urlList, yup)
     .then((validUrl) => {
       watchedState.form.error = null;
       watchedState.form.processState = 'processing';
       return fetchData(validUrl);
     })
     .then(({ data }) => {
-      const [feed, posts] = getData(data.contents);
+      const { feed, posts } = getData(data.contents);
       const newFeed = { ...feed, id: _.uniqueId(), rssUrl };
       const newPosts = posts.map((post) => ({
         ...post,
@@ -93,23 +92,28 @@ const handlePostClick = (event, watchedState) => {
   }
 };
 
-const init = () => {
+const updateTime = 5000;
+
+const init = (i18n) => {
   const elements = getElements();
   const state = getState();
 
-  const i18n = i18next.createInstance();
-  i18n.init({
-    lng: 'ru',
-    debug: true,
-    resources: { ru },
+  yup.setLocale({
+    string: {
+      url: i18n.t('form.errors.notValidUrl'),
+    },
+    mixed: {
+      required: i18n.t('form.errors.required'),
+      notOneOf: i18n.t('form.errors.notUniqueUrl'),
+    },
   });
 
   const watchedState = initView(state, elements, i18n);
 
-  elements.form.addEventListener('submit', (event) => handleFormSubmit(event, watchedState, elements, i18n));
+  elements.form.addEventListener('submit', (event) => handleFormSubmit(event, watchedState, elements));
   elements.postsContainer.addEventListener('click', (event) => handlePostClick(event, watchedState));
 
-  setTimeout(() => update(watchedState), 5000);
+  setTimeout(() => update(watchedState), updateTime);
 };
 
 export default init;

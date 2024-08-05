@@ -22,5 +22,5 @@ export default (xmlData) => {
     link: item.querySelector('link').textContent,
   }));
 
-  return [feedInfo, posts];
+  return { feed: feedInfo, posts };
 };

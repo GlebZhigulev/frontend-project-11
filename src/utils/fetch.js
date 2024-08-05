@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const proxify = (url, base = 'https://allorigins.hexlet.app/get') => {
+const makeUrl = (url, base = 'https://allorigins.hexlet.app/get') => {
   const newUrl = new URL(base);
   const searchUrl = encodeURI(url);
   newUrl.searchParams.set('disableCache', 'true');
@@ -9,6 +9,6 @@ const proxify = (url, base = 'https://allorigins.hexlet.app/get') => {
 };
 
 export default (url) => {
-  const result = axios.get(proxify(url));
+  const result = axios.get(makeUrl(url));
   return result;
 };

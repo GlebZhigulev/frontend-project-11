@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import fetchData from './fetch.js'; // Импортируйте вашу функцию fetchData
-import parseRss from './parser.js'; // Импортируйте вашу функцию parseRss
+import fetchData from './fetch.js';
+import parseRss from './parser.js';
 
 function update(state) {
   const { feeds, posts } = state;

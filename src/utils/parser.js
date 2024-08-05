@@ -1,4 +1,4 @@
-export default function parseRssFeed(xmlData) {
+export default (xmlData) => {
   const xmlDocument = new DOMParser().parseFromString(xmlData, 'application/xml');
 
   const errorElement = xmlDocument.querySelector('parsererror');
@@ -9,14 +9,12 @@ export default function parseRssFeed(xmlData) {
     throw parsingError;
   }
 
-  // Извлекаем информацию о ленте
   const channel = xmlDocument.querySelector('channel');
   const feedInfo = {
     title: channel.querySelector('title').textContent,
     description: channel.querySelector('description').textContent,
   };
 
-  // Извлекаем посты
   const items = Array.from(xmlDocument.querySelectorAll('item'));
   const posts = items.map((item) => ({
     title: item.querySelector('title').textContent,
@@ -24,6 +22,5 @@ export default function parseRssFeed(xmlData) {
     link: item.querySelector('link').textContent,
   }));
 
-  // Возвращаем информацию о ленте и постах
   return [feedInfo, posts];
-}
+};

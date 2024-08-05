@@ -54,9 +54,9 @@ const handleFormSubmit = (event, watchedState, elements, i18n) => {
 
   watchedState.form.processState = 'filling';
   const rssUrl = elements.input.value.trim();
-  const existingUrls = watchedState.feeds.map((feed) => feed.rssUrl);
+  const urlList = watchedState.feeds.map((feed) => feed.rssUrl);
 
-  validator(rssUrl, existingUrls, i18n)
+  validator(rssUrl, urlList, i18n)
     .then((validUrl) => {
       watchedState.form.error = null;
       watchedState.form.processState = 'processing';
